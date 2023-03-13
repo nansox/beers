@@ -1,0 +1,94 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+<link
+  rel="import"
+  href="/bower_components/polymer/lib/elements/dom-repeat.html"
+/>
+
+<dom-module id="a-table">
+  <template>
+    <style>
+      :host {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        max-width: 100%;
+        border-spacing: 0 0.3rem;
+      }
+      thead th {
+        padding: 1rem;
+        position: sticky;
+        top: 0px; /* This is for all the the "th" elements in the first child row */
+
+        background-color: rgb(245, 244, 244);
+      }
+      tbody td {
+        padding: 1rem;
+        overflow: hidden;
+        background-color: white;
+      }
+      tbody td:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+      tbody td:nth-last-child(2) {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    </style>
+    <table>
+      <thead>
+        <template is="dom-repeat" items="{{headers}}">
+          <th>{{item}}</th>
+        </template>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="{{items}}" as="element">
+          <tr>
+            <template
+              is="dom-repeat"
+              items="{{objectValues(element)}}"
+              as="value"
+            >
+              <td>{{value}}</td>
+            </template>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </template>
+
+  <script>
+    class ATable extends Polymer.Element {
+      static get is() {
+        return "a-table";
+      }
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: [],
+          },
+          headers: {
+            type: Array,
+            computed: "computeHeaders(items)",
+          },
+        };
+      }
+
+      objectValues(element) {
+        return Object.values(element);
+      }
+
+      computeHeaders(items) {
+        const headerSet = new Set([]);
+        for (const item of items)
+          for (const key of Object.keys(item)) headerSet.add(key);
+
+        return Array.from(headerSet);
+      }
+    }
+
+    window.customElements.define(ATable.is, ATable);
+  </script>
+</dom-module>

@@ -1,0 +1,71 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+
+<dom-module id="a-button">
+  <template>
+    <style>
+      :host {
+        display: inline-flex;
+        height: 29px;
+      }
+      button {
+        display: flex;
+        align-items: center;
+        color: white;
+        border-radius: 0.5rem;
+        border: transparent;
+      }
+      button[variant="primary"]:not(:hover):not(:active) {
+        background-color: rgb(105, 105, 221);
+      }
+      button[variant="primary"]:hover {
+        background-color: rgb(81, 81, 230);
+      }
+      button[variant="primary"]:active {
+        background-color: rgb(59, 59, 233);
+      }
+      button[variant="secondary"] {
+        background-color: rgb(128, 128, 128);
+      }
+      button[variant="secondary"]:hover {
+        background-color: rgb(92, 92, 92);
+      }
+      button[variant="secondary"]:active {
+        background-color: rgb(78, 78, 78);
+      }
+    </style>
+    <button type="button" on-click="onClick" variant$="[[validVariant]]">
+      <slot></slot>
+    </button>
+  </template>
+
+  <script>
+    class AButton extends Polymer.Element {
+      static get is() {
+        return "a-button";
+      }
+
+      static get properties() {
+        return {
+          variant: {
+            type: String,
+            value: "",
+          },
+          validVariant: {
+            type: String,
+            computed: "computeVariant(variant)",
+          },
+        };
+      }
+
+      computeVariant(variant) {
+        return variant === "primary" ? variant : "secondary";
+      }
+
+      onClick() {
+        this.dispatchEvent(new MouseEvent("click"));
+      }
+    }
+
+    window.customElements.define(AButton.is, AButton);
+  </script>
+</dom-module>

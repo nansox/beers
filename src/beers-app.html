@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html" />
+<link rel="import" href="./home.html" />
+
+<dom-module id="beers-app">
+  <template>
+    <style>
+      section {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      section > :first-child {
+        background-color: blue;
+        padding: 0.5rem 2rem;
+        color: white;
+      }
+      section > :last-child {
+        flex-grow: 1;
+      }
+    </style>
+    <section>
+      <div><h3>Beers</h3></div>
+      <home-page></home-page>
+    </section>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeersApp extends Polymer.Element {
+      static get is() {
+        return "beers-app";
+      }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: "beers-app",
+          },
+        };
+      }
+    }
+
+    window.customElements.define(BeersApp.is, BeersApp);
+  </script>
+</dom-module>

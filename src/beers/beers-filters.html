@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html" />
+<link rel="import" href="/src/common/input-text.html" />
+<link rel="import" href="/src/common/a-button.html" />
+<link rel="import" href="/src/common/search-button.html" />
+
+<dom-module id="beers-filters">
+  <template>
+    <style>
+      section {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    </style>
+    <section>
+      <input-text value="{{filter::input}}"></input-text>
+      <search-button on-click="onSearch"></search-button>
+      <a-button on-click="onClean">Clean</a-button>
+    </section>
+  </template>
+
+  <script>
+    class BeersFilters extends Polymer.Element {
+      static get is() {
+        return "beers-filters";
+      }
+
+      static get properties() {
+        return {
+          filter: {
+            type: String,
+            notify: true,
+            value: "",
+          },
+        };
+      }
+
+      onSearch() {
+        this.dispatchEvent(new CustomEvent("search"));
+      }
+      onClean() {
+        this.filter = "";
+        this.dispatchEvent(new CustomEvent("search"));
+      }
+    }
+
+    window.customElements.define(BeersFilters.is, BeersFilters);
+  </script>
+</dom-module>

@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html" />
+<link rel="import" href="/src/common/a-button.html" />
+<link rel="import" href="/assets/search-icon.html" />
+
+<dom-module id="search-button">
+  <template>
+    <a-button on-click="onClick" variant="primary">
+      <search-icon></search-icon>
+    </a-button>
+  </template>
+
+  <script>
+    class SearchButton extends Polymer.Element {
+      static get is() {
+        return "search-button";
+      }
+
+      onClick() {
+        this.dispatchEvent(new MouseEvent("click"));
+      }
+    }
+
+    window.customElements.define(SearchButton.is, SearchButton);
+  </script>
+</dom-module>

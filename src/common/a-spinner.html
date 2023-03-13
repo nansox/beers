@@ -1,0 +1,35 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+
+<dom-module id="a-spinner">
+  <template>
+    <style>
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+      :host {
+        border: rgb(110, 110, 110) solid 4px;
+        border-right-color: transparent;
+        border-radius: 1rem;
+        width: 24px;
+        height: 24px;
+        display: block;
+        animation: rotation 0.5s infinite linear;
+      }
+    </style>
+  </template>
+
+  <script>
+    class ASpinner extends Polymer.Element {
+      static get is() {
+        return "a-spinner";
+      }
+    }
+
+    window.customElements.define(ASpinner.is, ASpinner);
+  </script>
+</dom-module>

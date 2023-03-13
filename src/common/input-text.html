@@ -1,0 +1,36 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+
+<dom-module id="input-text">
+  <template>
+    <style>
+      input {
+        border-radius: 0.5rem;
+        border: 2px solid rgb(158, 158, 218);
+        padding: 5px 8px;
+      }
+      input:focus-visible {
+        outline: rgb(105, 105, 221) auto 1px;
+      }
+    </style>
+    <input type="text" value="{{value::input}}" />
+  </template>
+
+  <script>
+    class InputText extends Polymer.Element {
+      static get is() {
+        return "input-text";
+      }
+
+      static get properties() {
+        return {
+          value: {
+            type: String,
+            value: "",
+          },
+        };
+      }
+    }
+
+    window.customElements.define(InputText.is, InputText);
+  </script>
+</dom-module>

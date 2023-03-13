@@ -1,0 +1,52 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+<link rel="import" href="/src/common/a-table.html" />
+<link rel="import" href="/src/common/a-spinner.html" />
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html" />
+
+<dom-module id="beers-table">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
+        padding: 1rem 0;
+      }
+      a-table {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <template is="dom-if" if="[[busy]]">
+      <a-spinner></a-spinner>
+    </template>
+    <template is="dom-if" if="[[!busy]]">
+      <template is="dom-if" if="[[!isEmpty]]">
+        <a-table items="[[beersList]]"></a-table>
+      </template>
+      <template is="dom-if" if="[[isEmpty]]"> List Empty </template>
+    </template>
+  </template>
+
+  <script>
+    class BeersTable extends Polymer.Element {
+      static get is() {
+        return "beers-table";
+      }
+      static get properties() {
+        return {
+          busy: { type: Boolean, value: false },
+          beersList: { type: Array },
+          isEmpty: { type: Boolean, computed: "emptyCompute(busy, beersList)" },
+        };
+      }
+
+      emptyCompute(busy, beersList = []) {
+        return busy ? false : beersList.length === 0;
+      }
+    }
+
+    window.customElements.define(BeersTable.is, BeersTable);
+  </script>
+</dom-module>

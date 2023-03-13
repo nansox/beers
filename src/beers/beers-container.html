@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html" />
+<link rel="import" href="./beers-filters.html" />
+<link rel="import" href="./beers-table.html" />
+<script src="/src/api/beers.js" charset="utf-8"></script>
+
+<dom-module id="beers-container">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 0;
+      }
+      :host > :last-child {
+        flex-grow: 1;
+      }
+    </style>
+    <beers-filters filter="{{filter}}" on-search="onSearch"></beers-filters>
+    <beers-table
+      busy="[[loadingFlag]]"
+      beers-list="[[beersList]]"
+    ></beers-table>
+  </template>
+
+  <script>
+    class BeersContainer extends Polymer.Element {
+      static get is() {
+        return "beers-container";
+      }
+      static get properties() {
+        return {
+          loadingFlag: { type: Boolean, value: true },
+          filter: { type: String, value: "" },
+          beersList: {
+            type: Array,
+          },
+        };
+      }
+
+      async getBeers() {
+        let paramName = this.filter === "" ? undefined : this.filter;
+        this.loadingFlag = true;
+        try {
+          this.beersList = await fetchBeers(paramName);
+        } finally {
+          this.loadingFlag = false;
+        }
+      }
+
+      onSearch() {
+        this.getBeers();
+      }
+
+      ready() {
+        super.ready();
+        this.getBeers();
+      }
+    }
+
+    window.customElements.define(BeersContainer.is, BeersContainer);
+  </script>
+</dom-module>
+
+<!-- value() {
+              return [
+                { name: "Antonio", age: 24, date: "2-4-2022" },
+                { name: "Jose", age: 14, date: "23-4-2020" },
+                { name: "Lucas", age: 42, date: "2-12-2021" },
+                { name: "Pedro", age: 11, date: "13-5-2019" },
+                { name: "Juan", age: 53, date: "1-7-2015" },
+              ];
+            }, -->

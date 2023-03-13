@@ -1,0 +1,28 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html" />
+
+<dom-module id="search-icon">
+  <template>
+    <svg
+      enable-background="new 3.5 0.5 18 18"
+      height="18"
+      viewBox="3.5 .5 18 18"
+      width="18"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2">
+        <circle cx="10.5" cy="7.5" r="6" />
+        <path d="m20.531 17.531-6.031-6.031" />
+      </g>
+    </svg>
+  </template>
+
+  <script>
+    class SearchIcon extends Polymer.Element {
+      static get is() {
+        return "search-icon";
+      }
+    }
+
+    window.customElements.define(SearchIcon.is, SearchIcon);
+  </script>
+</dom-module>
